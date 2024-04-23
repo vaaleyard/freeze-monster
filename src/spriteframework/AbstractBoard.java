@@ -84,7 +84,6 @@ public abstract class AbstractBoard extends JPanel {
 		//        shot = new Shot();
     }
 
-
     protected void createPlayers() {
 		players = new LinkedList<Player>();
         players.add(createPlayer());
@@ -136,10 +135,6 @@ public abstract class AbstractBoard extends JPanel {
     		}
     	}
     }
-
-
-
-
 
     @Override
     public void paintComponent(Graphics g) {
@@ -194,15 +189,11 @@ public abstract class AbstractBoard extends JPanel {
                 Commons.BOARD_WIDTH / 2);
     }
 
-
-
     private void doGameCycle() {
 
         update();
         repaint();
     }
-
-
 
 	private class GameCycle implements ActionListener {
 

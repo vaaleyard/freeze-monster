@@ -1,4 +1,4 @@
-package freezemonsters;
+package FreezeMonsters;
 
 import java.util.LinkedList;
 
@@ -16,8 +16,8 @@ import java.awt.Image;
 
 public class Monster extends BadnessBoxSprite {
 
-    private Slime slime;
-    String monsterCongImg;
+    private Gosma gosma;
+    String Monster_CongImg;
     private boolean congelado;
     private int Timer = 10;
 
@@ -30,12 +30,12 @@ public class Monster extends BadnessBoxSprite {
 
         this.x = x;
         this.y = y;
-        slime = new Slime(x,y);
+        gosma = new Gosma(x,y);
 
         Random random = new Random();
         int randomNum = random.nextInt(9) + 1;
-        String monsterImg = "images/monster" + randomNum + ".png";
-        monsterCongImg = "images/monster" + randomNum + "bg.png";
+        String monsterImg = "ImagesFreezeMonster/monster" + randomNum + ".png";
+        Monster_CongImg = "ImagesFreezeMonster/monster" + randomNum + "bg.png";
         ImageIcon ii = new ImageIcon(monsterImg);
         Image originalImage = ii.getImage();
         Image scaledImage = originalImage.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
@@ -72,21 +72,21 @@ public class Monster extends BadnessBoxSprite {
     @Override
     public void die() {
         this.setCongelado(true);
-        ImageIcon ii = new ImageIcon(this.monsterCongImg);
+        ImageIcon ii = new ImageIcon(this.Monster_CongImg);
         Image originalImage = ii.getImage();
         Image scaledImage = originalImage.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
         setImage(scaledImage);
     }
 
-    public Slime getSlime() {
-        return slime;
+    public Gosma getGosma() {
+        return gosma;
     }
 
 
     @Override
     public LinkedList<BadSprite> getBadnesses() {
         LinkedList<BadSprite> aBomb = new LinkedList<BadSprite>();
-        aBomb.add(slime);
+        aBomb.add(gosma);
         return aBomb;
     }
 

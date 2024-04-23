@@ -25,7 +25,7 @@ public class SpaceInvadersBoard extends AbstractBoard{
     private int deaths = 0;
 
 
-    private String explImg = "imagesSpaceInvaders/explosion.png";
+    private String explImg = "ImagesSpaceInvaders/explosion.png";
 
 
 

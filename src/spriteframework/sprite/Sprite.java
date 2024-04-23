@@ -11,7 +11,6 @@ public class Sprite {
     private boolean dying;
 
     protected int x;
-
     protected int y;
     protected int imageWidth;
     protected int imageHeight;

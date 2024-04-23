@@ -18,7 +18,7 @@ public class Player extends Sprite {
     }
 
     protected void loadImage () {
-        ImageIcon ii = new ImageIcon("imagesSpaceInvaders/player.png");
+        ImageIcon ii = new ImageIcon("ImageSpriteFramework/player.png");
         width = ii.getImage().getWidth(null);
         setImage(ii.getImage());
     }

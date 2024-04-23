@@ -20,7 +20,7 @@ public class Bomb extends BadSprite {
         this.x = x;
         this.y = y;
 
-        String bombImg = "imagesSpaceInvaders/bomb.png";
+        String bombImg = "ImagesSpaceInvaders/bomb.png";
         ImageIcon ii = new ImageIcon(bombImg);
         setImage(ii.getImage());
     }

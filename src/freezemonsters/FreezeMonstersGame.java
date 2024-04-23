@@ -1,4 +1,4 @@
-package freezemonsters;
+package FreezeMonsters;
 
 import java.awt.EventQueue;
 
@@ -8,7 +8,6 @@ import spriteframework.MainFrame;
 
 public class FreezeMonstersGame extends MainFrame {
 
-
     public FreezeMonstersGame() {
         super("Freeze Monsters");
     }
@@ -17,12 +16,10 @@ public class FreezeMonstersGame extends MainFrame {
         return new FreezeMonstersBoard();
     }
 
-
     public static void main(String[] args) {
 
         EventQueue.invokeLater(() -> {
-
-            new freezemonsters.FreezeMonstersGame();
+            new FreezeMonsters.FreezeMonstersGame();
         });
     }
 

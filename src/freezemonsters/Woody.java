@@ -1,4 +1,4 @@
-package freezemonsters;
+package FreezeMonsters;
 import spriteframework.Commons;
 import spriteframework.sprite.Player;
 import java.awt.Image;
@@ -7,20 +7,19 @@ import java.awt.Image;
 
 import javax.swing.*;
 import java.awt.event.KeyEvent;
-import java.security.Key;
 
 public class Woody extends Player {
 
-    int ultimoMov;
+    int last_mov;
 
     public Woody(){
-        this.ultimoMov = KeyEvent.VK_UP;
+        this.last_mov = KeyEvent.VK_UP;
         loadImage();
         getImageDimensions();
         resetState();
     }
     protected void loadImage() {
-        ImageIcon ii = new ImageIcon("images/woody.png");
+        ImageIcon ii = new ImageIcon("ImagesFreezeMonster/woody.png");
         Image originalImage = ii.getImage();
         Image scaledImage = originalImage.getScaledInstance(55, 55, Image.SCALE_SMOOTH);
         setImage(scaledImage);
@@ -83,7 +82,7 @@ public class Woody extends Player {
 
         int key = e.getKeyCode();
         if(key != KeyEvent.VK_SPACE){
-            ultimoMov = key;
+            last_mov = key;
         }
 
         if (key == KeyEvent.VK_LEFT) {
@@ -108,15 +107,15 @@ public class Woody extends Player {
     }
     private void resetState() {
 
-        setX(freezemonsters.Commons.INIT_WOODY_X);
-        setY(freezemonsters.Commons.INIT_WOODY_Y);
+        setX(FreezeMonsters.Commons.WOODY_INIT_X);
+        setY(FreezeMonsters.Commons.WOODY_INIT_Y);
     }
 
-    public int getUltimoMov() {
-        return ultimoMov;
+    public int getLast_mov() {
+        return last_mov;
     }
 
-    public void setUltimoMov(int ultimoMov) {
-        this.ultimoMov = ultimoMov;
+    public void setLast_mov(int last_mov) {
+        this.last_mov = last_mov;
     }
 }

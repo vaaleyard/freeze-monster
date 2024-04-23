@@ -1,29 +1,24 @@
-package freezemonsters;
+package FreezeMonsters;
 
 import java.awt.*;
 
 import java.awt.event.KeyEvent;
-import java.util.Iterator;
 import java.util.Random;
-import java.util.Timer;
 
 import javax.swing.ImageIcon;
 
 
-import freezemonsters.Commons;
 import spriteframework.AbstractBoard;
 import spriteframework.sprite.BadSprite;
 import spriteframework.sprite.Player;
-
-import spaceinvaders.sprite.*;
 
 public class FreezeMonstersBoard extends AbstractBoard{
 
     //define sprites
     //private List<BadSprite> aliens;
-    private Ray ray;
+    private Freeze_ray ray;
     Color customColor = new Color(51,212,106);
-    private int ultimaKey;
+    private int ultima_tecla;
 
     // define global control vars
     private int directionX = -1;
@@ -33,6 +28,7 @@ public class FreezeMonstersBoard extends AbstractBoard{
     private String explImg = "imagesSpaceInvaders/explosion.png";
 
     public void doDrawing(Graphics g1) {
+
         Graphics2D g = (Graphics2D) g1;
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
@@ -49,19 +45,16 @@ public class FreezeMonstersBoard extends AbstractBoard{
             drawOtherSprites(g);
 
         } else {
-
             if (timer.isRunning()) {
                 timer.stop();
             }
-
             gameOver(g);
         }
-
         Toolkit.getDefaultToolkit().sync();
     }
 
     protected void createBadSprites() {  // create sprites
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 9; i++) {
             Monster monster = new Monster(Commons.MONSTER_INIT_X,Commons.MONSTER_INIT_Y);
                 badSprites.add(monster);
         }
@@ -72,14 +65,13 @@ public class FreezeMonstersBoard extends AbstractBoard{
     }
 
     protected void createOtherSprites() {
-        ray = new Ray();
-        ultimaKey = KeyEvent.VK_UP;
+        ray = new Freeze_ray();
+        ultima_tecla = KeyEvent.VK_UP;
     }
 
     private void drawRay(Graphics g) {
 
         if (ray.isVisible()) {
-
             g.drawImage(ray.getImage(), ray.getX(), ray.getY(), this);
         }
     }
@@ -99,33 +91,13 @@ public class FreezeMonstersBoard extends AbstractBoard{
         if (key == KeyEvent.VK_SPACE) {
 
             if (inGame) {
-
                 if (!ray.isVisible()) {
-                    ultimaKey = ((Woody)player).getUltimoMov();
-                    ray = new Ray(x, y);
+                    ultima_tecla = ((Woody)player).getLast_mov();
+                    ray = new Freeze_ray(x, y);
                 }
             }
         }
     }
-
-//    private void gameOver(Graphics g) {
-//
-//        g.setColor(Color.black);
-//        g.fillRect(0, 0, Commons.BOARD_WIDTH, Commons.BOARD_HEIGHT);
-//
-//        g.setColor(new Color(0, 32, 48));
-//        g.fillRect(50, Commons.BOARD_WIDTH / 2 - 30, Commons.BOARD_WIDTH - 100, 50);
-//        g.setColor(Color.white);
-//        g.drawRect(50, Commons.BOARD_WIDTH / 2 - 30, Commons.BOARD_WIDTH - 100, 50);
-//
-//        Font small = new Font("Helvetica", Font.BOLD, 14);
-//        FontMetrics fontMetrics = this.getFontMetrics(small);
-//
-//        g.setColor(Color.white);
-//        g.setFont(small);
-//        g.drawString(message, (Commons.BOARD_WIDTH - fontMetrics.stringWidth(message)) / 2,
-//                Commons.BOARD_WIDTH / 2);
-//    }
 
     protected void update() {
 
@@ -150,6 +122,10 @@ public class FreezeMonstersBoard extends AbstractBoard{
                 int monsterX = monster.getX();
                 int monsterY = monster.getY();
 
+                Gosma gosma = ((Monster) monster).getGosma();
+                int gosmaX = monster.getX();
+                int gosmaY = monster.getY();
+
                 if (monster.isVisible() && ray.isVisible() && !((Monster)monster).isCongelado()) {
                     if (rayX >= (monsterX)
                             && rayX <= (monsterX + Commons.MONSTER_WIDTH)
@@ -160,18 +136,28 @@ public class FreezeMonstersBoard extends AbstractBoard{
                         frozen++;
                         ray.die();
                     }
+                    if (rayX >= (gosmaX)
+                            && rayX <= (gosmaX + Commons.GOSMA_WIDTH)
+                            && rayY >= (gosmaY)
+                            && rayY <= (gosmaY + Commons.GOSMA_HEIGHT)){
+
+                        gosma.die();
+                        gosma.setDestroyed(true);
+                        ray.die();
+                    }
                 }
+
             }
-            if(ultimaKey == KeyEvent.VK_LEFT){
+            if(ultima_tecla == KeyEvent.VK_LEFT){
                 rayX -= 4;
             }
-            if(ultimaKey == KeyEvent.VK_RIGHT){
+            if(ultima_tecla == KeyEvent.VK_RIGHT){
                 rayX += 4;
             }
-            if(ultimaKey == KeyEvent.VK_UP){
+            if(ultima_tecla == KeyEvent.VK_UP){
                 rayY -= 4;
             }
-            if(ultimaKey == KeyEvent.VK_DOWN){
+            if(ultima_tecla == KeyEvent.VK_DOWN){
                 rayY += 4;
             }
             if(rayY < 0 || rayX < 0 || rayY > Commons.BOARD_HEIGHT || rayX > Commons.BOARD_WIDTH - Commons.BORDER_RIGHT){
@@ -184,7 +170,6 @@ public class FreezeMonstersBoard extends AbstractBoard{
         }
 
         // aliens
-
         for (BadSprite monster : badSprites) {
             if (!((Monster) monster).isCongelado()) {
                     Random rand = new Random();
@@ -197,23 +182,19 @@ public class FreezeMonstersBoard extends AbstractBoard{
                     ((Monster) monster).setTimer(((Monster) monster).getTimer()+1);
             }
         }
-
-
-        // bombs
-
         updateOtherSprites();
     }
 
 
     protected void updateOtherSprites() {
+
         Random generator = new Random();
 
         for (BadSprite monster : badSprites) {
-            //int ray1 = generator.nextInt(15);
-            Slime slime = ((Monster) monster).getSlime();
 
+            Gosma gosma = ((Monster) monster).getGosma();
 
-            if (!((Monster) monster).isCongelado() && slime.isDestroyed()) {
+            if (!((Monster) monster).isCongelado() && gosma.isDestroyed()) {
 
                 int directionX = generator.nextInt(-4,5);
                 int directionY = generator.nextInt(-4,5);
@@ -223,37 +204,37 @@ public class FreezeMonstersBoard extends AbstractBoard{
                     directionY = generator.nextInt(-4,5);
                 }
 
-                slime.setDx(directionX);
-                slime.setDy(directionY);
+                gosma.setDx(directionX);
+                gosma.setDy(directionY);
 
-                slime.setDestroyed(false);
-                slime.setX(monster.getX());
-                slime.setY(monster.getY());
+                gosma.setDestroyed(false);
+                gosma.setX(monster.getX());
+                gosma.setY(monster.getY());
             }
 
-            if (players.get(0).isVisible() && !slime.isDestroyed()) {
+            if (players.get(0).isVisible() && !gosma.isDestroyed()) {
 
-                if (slime.getX() >= (players.getFirst().getX())
-                        && slime.getX() <= (players.getFirst().getX() + Commons.WOODY_WIDTH)
-                        && slime.getY() >= (players.getFirst().getY())
-                        && slime.getY() <= (players.getFirst().getY() + Commons.WOODY_HEIGHT)) {
+                if (gosma.getX() >= (players.getFirst().getX())
+                        && gosma.getX() <= (players.getFirst().getX() + Commons.WOODY_WIDTH)
+                        && gosma.getY() >= (players.getFirst().getY())
+                        && gosma.getY() <= (players.getFirst().getY() + Commons.WOODY_HEIGHT)) {
 
                     ImageIcon ii = new ImageIcon(explImg);
                     players.get(0).setImage(ii.getImage());
                     players.get(0).setDying(true);
-                    slime.setDestroyed(true);
+                    gosma.setDestroyed(true);
                 }
             }
 
-            if (!slime.isDestroyed()) {
-                slime.setX(slime.getX() + slime.getDx());
-                slime.setY(slime.getY() + slime.getDy());
+            if (!gosma.isDestroyed()) {
+                gosma.setX(gosma.getX() + gosma.getDx());
+                gosma.setY(gosma.getY() + gosma.getDy());
 
-                if (slime.getX() >= Commons.BOARD_WIDTH || slime.getX() <= 0 || slime.getY() <= 0) {
-                    slime.setDestroyed(true);
+                if (gosma.getX() >= Commons.BOARD_WIDTH || gosma.getX() <= 0 || gosma.getY() <= 0) {
+                    gosma.setDestroyed(true);
                 }
-                if(slime.getX() == ray.getX() && slime.getY() == ray.getY()){
-                    slime.setDestroyed(true);
+                if(gosma.getX() == ray.getX() && gosma.getY() == ray.getY()){
+                    gosma.setDestroyed(true);
                     ray.die();
                 }
             }
