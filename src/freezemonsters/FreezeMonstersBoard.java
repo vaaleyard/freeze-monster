@@ -123,8 +123,8 @@ public class FreezeMonstersBoard extends AbstractBoard{
                 int monsterY = monster.getY();
 
                 Gosma gosma = ((Monster) monster).getGosma();
-                int gosmaX = monster.getX();
-                int gosmaY = monster.getY();
+                int gosmaX = gosma.getX();
+                int gosmaY = gosma.getY();
 
                 if (monster.isVisible() && ray.isVisible() && !((Monster)monster).isCongelado()) {
                     if (rayX >= (monsterX)
