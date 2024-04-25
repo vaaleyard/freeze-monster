@@ -16,9 +16,7 @@ import spriteframework.sprite.Player;
 import spaceinvaders.sprite.*;
 
 public class SpaceInvadersBoard extends AbstractBoard{  
-    //define sprites
-    //private List<BadSprite> aliens;
-    private Shot shot;    
+    private Shot shot;
     
     // define global control vars   
     private int direction = -1;
@@ -26,9 +24,6 @@ public class SpaceInvadersBoard extends AbstractBoard{
 
 
     private String explImg = "ImagesSpaceInvaders/explosion.png";
-
-
-
 
     protected void createBadSprites() {  // create sprites
         for (int i = 0; i < 4; i++) {
@@ -77,25 +72,6 @@ public class SpaceInvadersBoard extends AbstractBoard{
 			}
 		}
 	}
-
-//    private void gameOver(Graphics g) {
-//
-//        g.setColor(Color.black);
-//        g.fillRect(0, 0, Commons.BOARD_WIDTH, Commons.BOARD_HEIGHT);
-//
-//        g.setColor(new Color(0, 32, 48));
-//        g.fillRect(50, Commons.BOARD_WIDTH / 2 - 30, Commons.BOARD_WIDTH - 100, 50);
-//        g.setColor(Color.white);
-//        g.drawRect(50, Commons.BOARD_WIDTH / 2 - 30, Commons.BOARD_WIDTH - 100, 50);
-//
-//        Font small = new Font("Helvetica", Font.BOLD, 14);
-//        FontMetrics fontMetrics = this.getFontMetrics(small);
-//
-//        g.setColor(Color.white);
-//        g.setFont(small);
-//        g.drawString(message, (Commons.BOARD_WIDTH - fontMetrics.stringWidth(message)) / 2,
-//                Commons.BOARD_WIDTH / 2);
-//    }
 
     protected void update() {
 
